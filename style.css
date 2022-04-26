@@ -1,5 +1,6 @@
 #myCanvas {
-  height: 5%;
+  height: 584px;
   width: 100%;
   border: 2px gray solid;
+  background-color: black;
 }
