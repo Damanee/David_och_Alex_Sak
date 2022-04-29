@@ -1,5 +1,7 @@
 var player;
 
+var distance = 20;
+
 function startGame() {
   myGameArea.start();
   player = new component(30, 30, "red", 10, 120);
@@ -34,6 +36,16 @@ function component(width, height, color, x, y) {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   };
 }
+
+document.body.onkeydown = function (event) {
+  console.log(event.key);
+  if (player.x >= 1200) {
+    console.log("win!");
+  }
+  if (event.key === "d") {
+    player.x += distance;
+  }
+};
 
 function updateGameArea() {
   myGameArea.clear();
