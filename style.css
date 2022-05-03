@@ -1,4 +1,17 @@
+@font-face {
+  font-family: "Mario-Kart-DS.ttf";
+  src: url(Mario-Kart-DS.ttf);
+}
+
 canvas {
   border: 2px gray solid;
-  background-image: url("THING.png");
+  background-image: url("racetrack.png");
 }
+
+#p_s {
+  position: absolute;
+  top: 210px;
+  left:125px;
+  font-family: "Mario-Kart-DS.ttf";
+  font-size: 100px;
+  

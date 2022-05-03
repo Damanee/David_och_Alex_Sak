@@ -2,15 +2,17 @@ var player;
 
 var distance = 20;
 
+document.getElementById("p_s").innerHTML = "press space to start!";
+
 function startGame() {
   myGameArea.start();
-  player = new component(30, 30, "red", 10, 120);
+  player = new component(30, 30, "red", 10, 295);
 }
 
 var myGameArea = {
   canvas: document.createElement("canvas"),
   start: function () {
-    this.canvas.width = 1260;
+    this.canvas.width = 1250;
     this.canvas.height = 584;
     this.context = this.canvas.getContext("2d");
     this.context = this.canvas.getContext("2d");
@@ -36,14 +38,55 @@ function component(width, height, color, x, y) {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   };
 }
+let current_letter;
+const alphabet = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+];
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 document.body.onkeydown = function (event) {
-  console.log(event.key);
+  if (event.key === spacebar) {
+    current_letter = alphabet[getRandomInt(25)];
+    console.log(current_letter);
+  }
+};
+
+document.body.onkeydown = function (event) {
   if (player.x >= 1200) {
     console.log("win!");
   }
-  if (event.key === "d") {
+  if (event.key === current_letter) {
     player.x += distance;
+    current_letter = alphabet[getRandomInt(25)];
+    console.log(current_letter);
   }
 };
 
