@@ -1,6 +1,6 @@
 var player;
 
-var distance = 20;
+let distance = 20;
 
 document.getElementById("p_s").innerHTML = "press space to start!";
 
@@ -68,25 +68,37 @@ const alphabet = [
   "z",
 ];
 
+let isPlaying = false;
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
 document.body.onkeydown = function (event) {
-  if (event.key === spacebar) {
+  console.log(event);
+  if (event.code === "Space") {
+    //Starta om om isPlaying är false
     current_letter = alphabet[getRandomInt(25)];
-    console.log(current_letter);
+    document.getElementById("p_s").innerHTML = current_letter;
+  } else if (event.key === current_letter) {
+    // hoppa framåt
+    isPlaying = true;
+    if (isPlaying === true) {
+      console.log(event.key);
+      player.x += distance;
+      current_letter = alphabet[getRandomInt(25)];
+      document.getElementById("p_s").innerHTML = current_letter;
+    } else {
+      console.log(current_letter);
+      clockInterval = setInterval(setTime, 1000);
+    }
   }
-};
 
-document.body.onkeydown = function (event) {
   if (player.x >= 1200) {
-    console.log("win!");
-  }
-  if (event.key === current_letter) {
-    player.x += distance;
-    current_letter = alphabet[getRandomInt(25)];
-    console.log(current_letter);
+    isPlaying = false;
+    distance = 0;
+    document.getElementById("p_s").innerHTML = "you finished";
+    clearInterval(clockInterval);
   }
 };
 
@@ -94,3 +106,24 @@ function updateGameArea() {
   myGameArea.clear();
   player.update();
 }
+
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
+let clockInterval;
