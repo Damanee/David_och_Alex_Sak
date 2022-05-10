@@ -2,11 +2,6 @@ var player;
 
 let img = document.getElementById("sprite");
 
-draw() {
-  c.drawImage(this.Image
-    
-)
-}
 let distance = 20;
 
 document.getElementById("p_s").innerHTML = "press space to start!";
