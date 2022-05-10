@@ -1,5 +1,12 @@
 var player;
 
+let img = document.getElementById("sprite");
+
+draw() {
+  c.drawImage(this.Image
+    
+)
+}
 let distance = 20;
 
 document.getElementById("p_s").innerHTML = "press space to start!";
@@ -7,6 +14,7 @@ document.getElementById("p_s").innerHTML = "press space to start!";
 function startGame() {
   myGameArea.start();
   player = new component(30, 30, "red", 10, 295);
+  player1 = context.drawImage(img, 10, 295);
 }
 
 var myGameArea = {
@@ -67,6 +75,8 @@ const alphabet = [
   "y",
   "z",
 ];
+
+const numbers = [, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 let isPlaying = false;
 
