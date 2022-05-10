@@ -1,6 +1,17 @@
 var player;
 
-let img = document.getElementById("sprite");
+function copyImageToCanvas() {
+  var image = document.querySelector("img");
+  var canvas = document.querySelector("canvas");
+
+  var ctx = canvas.getContext("2d");
+
+  ctx.drawImage(image, 0, 0);
+}
+
+setTimeout(() => {
+  copyImageToCanvas();
+}, 300);
 
 let distance = 20;
 
@@ -8,8 +19,12 @@ document.getElementById("p_s").innerHTML = "press space to start!";
 
 function startGame() {
   myGameArea.start();
-  player = new component(30, 30, "red", 10, 295);
-  player1 = context.drawImage(img, 10, 295);
+  var image = document.querySelector("img");
+  var canvas = document.querySelector("canvas");
+
+  var ctx = canvas.getContext("2d");
+
+  ctx.drawImage(image, 0, 0);
 }
 
 var myGameArea = {
@@ -17,7 +32,6 @@ var myGameArea = {
   start: function () {
     this.canvas.width = 1250;
     this.canvas.height = 584;
-    this.context = this.canvas.getContext("2d");
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.interval = setInterval(updateGameArea, 20);
