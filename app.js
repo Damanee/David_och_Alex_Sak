@@ -3,9 +3,11 @@ var player;
 let distance = 75;
 let neg_distance = 25;
 
-document.getElementById("p_s").innerHTML = "press space to start!";
-
 function startGame() {
+  document.getElementById("p_s").innerHTML = "press space to start!";
+  document.getElementById("c_l").style.display = "none";
+  isPlaying = false;
+  clearInterval(clockInterval);
   myGameArea.start();
   let img = document.getElementById("racecar");
   player = new component(30, 30, img, 10, 250);
