@@ -1,37 +1,21 @@
 var player;
 
-function copyImageToCanvas() {
-  var image = document.querySelector("img");
-  var canvas = document.querySelector("canvas");
-
-  var ctx = canvas.getContext("2d");
-
-  ctx.drawImage(image, 0, 0);
-}
-
-setTimeout(() => {
-  copyImageToCanvas();
-}, 300);
-
-let distance = 20;
+let distance = 75;
+let neg_distance = 25;
 
 document.getElementById("p_s").innerHTML = "press space to start!";
 
 function startGame() {
   myGameArea.start();
-  var image = document.querySelector("img");
-  var canvas = document.querySelector("canvas");
-
-  var ctx = canvas.getContext("2d");
-
-  ctx.drawImage(image, 0, 0);
+  let img = document.getElementById("racecar");
+  player = new component(30, 30, img, 10, 250);
 }
-
 var myGameArea = {
   canvas: document.createElement("canvas"),
   start: function () {
     this.canvas.width = 1250;
     this.canvas.height = 584;
+    this.context = this.canvas.getContext("2d");
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.interval = setInterval(updateGameArea, 20);
@@ -40,19 +24,17 @@ var myGameArea = {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
 };
-
-function component(width, height, color, x, y) {
+function component(width, height, img, x, y) {
   this.width = width;
   this.height = height;
   this.x = x;
   this.y = y;
+  this.img = img;
   ctx = myGameArea.context;
-  ctx.fillStyle = color;
-  ctx.fillRect(this.x, this.y, this.width, this.height);
+  ctx.drawImage(img, x, y);
   this.update = function () {
     ctx = myGameArea.context;
-    ctx.fillStyle = color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.img, this.x, this.y, 125, 125);
   };
 }
 let current_letter;
@@ -84,58 +66,57 @@ const alphabet = [
   "y",
   "z",
 ];
-
 const numbers = [, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
 let isPlaying = false;
-
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+let gameStartTime;
+
 document.body.onkeydown = function (event) {
   console.log(event);
-  if (event.code === "Space") {
+  if (event.code === "Space" && isPlaying === false) {
     //Starta om om isPlaying är false
+    player.x += neg_distance;
+    isPlaying = true;
+    document.getElementById("p_s").innerHTML = "";
     current_letter = alphabet[getRandomInt(25)];
-    document.getElementById("p_s").innerHTML = current_letter;
+    document.getElementById("c_l").style.display = "block";
+    document.getElementById("c_l").innerHTML = current_letter;
+    gameStartTime = new Date();
+    clockInterval = setInterval(setTime, 1000);
   } else if (event.key === current_letter) {
     // hoppa framåt
-    isPlaying = true;
     if (isPlaying === true) {
       console.log(event.key);
       player.x += distance;
       current_letter = alphabet[getRandomInt(25)];
-      document.getElementById("p_s").innerHTML = current_letter;
-    } else {
-      console.log(current_letter);
-      clockInterval = setInterval(setTime, 1000);
+      document.getElementById("c_l").innerHTML = current_letter;
     }
   }
-
   if (player.x >= 1200) {
     isPlaying = false;
     distance = 0;
     document.getElementById("p_s").innerHTML = "you finished";
+    document.getElementById("c_l").style.display = "none ";
     clearInterval(clockInterval);
+  } else if (event.key != current_letter && isPlaying === true) {
+    player.x -= neg_distance;
   }
 };
-
 function updateGameArea() {
   myGameArea.clear();
   player.update();
 }
-
 var minutesLabel = document.getElementById("minutes");
 var secondsLabel = document.getElementById("seconds");
 var totalSeconds = 0;
-
 function setTime() {
   ++totalSeconds;
   secondsLabel.innerHTML = pad(totalSeconds % 60);
   minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
 }
-
 function pad(val) {
   var valString = val + "";
   if (valString.length < 2) {
@@ -144,5 +125,4 @@ function pad(val) {
     return valString;
   }
 }
-
 let clockInterval;

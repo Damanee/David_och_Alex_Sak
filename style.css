@@ -7,7 +7,7 @@ html {
 }
 canvas {
   border: 2px gray solid;
-  /*background-image: url("racetrack.png");*/
+  background-image: url("racetrack.png");
 }
 
 img {
@@ -19,4 +19,29 @@ img {
   top: 210px;
   left: 125px;
   font-size: 100px;
+}
+
+#c_l {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 580px;
+  font-size: 100px;
+  color: red;
+  border: solid lightgreen 5px;
+  background-color: black;
+  padding: 15px;
+}
+
+#racecar {
+  display: none;
+  width: 50px;
+  height: 50px;
+}
+
+#timer {
+  font-size: 55px;
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
 }
