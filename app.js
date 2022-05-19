@@ -2,15 +2,20 @@ var player;
 
 let distance = 75;
 let neg_distance = 25;
+let highscore = "";
 
 function startGame() {
   document.getElementById("p_s").innerHTML = "press space to start!";
   document.getElementById("c_l").style.display = "none";
+  distance = 75;
   isPlaying = false;
   clearInterval(clockInterval);
   myGameArea.start();
   let img = document.getElementById("racecar");
   player = new component(30, 30, img, 10, 250);
+  document.getElementById("minutes").innerHTML = "00";
+  document.getElementById("seconds").innerHTML = "00";
+  totalSeconds = 0;
 }
 var myGameArea = {
   canvas: document.createElement("canvas"),
@@ -79,7 +84,6 @@ let gameStartTime;
 document.body.onkeydown = function (event) {
   console.log(event);
   if (event.code === "Space" && isPlaying === false) {
-    //Starta om om isPlaying är false
     player.x += neg_distance;
     isPlaying = true;
     document.getElementById("p_s").innerHTML = "";
@@ -101,10 +105,20 @@ document.body.onkeydown = function (event) {
     isPlaying = false;
     distance = 0;
     document.getElementById("p_s").innerHTML = "you finished";
+    score();
     document.getElementById("c_l").style.display = "none ";
     clearInterval(clockInterval);
+    console.log(totalSeconds);
   } else if (event.key != current_letter && isPlaying === true) {
     player.x -= neg_distance;
+  }
+
+  function score() {
+    if (highscore < totalSeconds) {
+      totalSeconds = highscore;
+      document.getElementById("p_s").innerHTML =
+        "you finished! new highscore, time:" + totalSeconds;
+    }
   }
 };
 function updateGameArea() {
@@ -113,7 +127,7 @@ function updateGameArea() {
 }
 var minutesLabel = document.getElementById("minutes");
 var secondsLabel = document.getElementById("seconds");
-var totalSeconds = 0;
+let totalSeconds = 0;
 function setTime() {
   ++totalSeconds;
   secondsLabel.innerHTML = pad(totalSeconds % 60);
