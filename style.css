@@ -22,6 +22,13 @@ img {
   font-size: 100px;
 }
 
+#y_f {
+  position: absolute;
+  top: 130px;
+  left: 125px;
+  font-size: 100px;
+}
+
 #c_l {
   display: none;
   position: absolute;
@@ -32,6 +39,13 @@ img {
   border: solid lightgreen 5px;
   background-color: black;
   padding: 15px;
+}
+
+#h_s {
+  position: absolute;
+  top: 25px;
+  left: 50px;
+  font-size: 40px;
 }
 
 #racecar {

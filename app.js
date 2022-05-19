@@ -1,13 +1,14 @@
 var player;
 
-let distance = 75;
 let neg_distance = 25;
-let highscore = "";
+let highscore = 1000;
+let distance;
 
 function startGame() {
   document.getElementById("p_s").innerHTML = "press space to start!";
   document.getElementById("c_l").style.display = "none";
-  distance = 75;
+  document.getElementById("y_f").style.display = "none";
+  distance = 610;
   isPlaying = false;
   clearInterval(clockInterval);
   myGameArea.start();
@@ -84,7 +85,6 @@ let gameStartTime;
 document.body.onkeydown = function (event) {
   console.log(event);
   if (event.code === "Space" && isPlaying === false) {
-    player.x += neg_distance;
     isPlaying = true;
     document.getElementById("p_s").innerHTML = "";
     current_letter = alphabet[getRandomInt(25)];
@@ -100,24 +100,35 @@ document.body.onkeydown = function (event) {
       current_letter = alphabet[getRandomInt(25)];
       document.getElementById("c_l").innerHTML = current_letter;
     }
+  } else if (
+    current_letter != undefined &&
+    event.key != current_letter &&
+    isPlaying === true
+  ) {
+    console.log(current_letter);
+    player.x -= neg_distance;
   }
-  if (player.x >= 1200) {
+
+  if (player.x > 1200) {
     isPlaying = false;
     distance = 0;
-    document.getElementById("p_s").innerHTML = "you finished";
     score();
     document.getElementById("c_l").style.display = "none ";
     clearInterval(clockInterval);
     console.log(totalSeconds);
-  } else if (event.key != current_letter && isPlaying === true) {
-    player.x -= neg_distance;
+    player.x = 0;
   }
-
   function score() {
-    if (highscore < totalSeconds) {
-      totalSeconds = highscore;
+    if (highscore > totalSeconds) {
+      highscore = totalSeconds;
+      document.getElementById("y_f").style.display = "block";
+      document.getElementById("p_s").style.display = "block";
+      document.getElementById("y_f").innerHTML =
+        "you finished! new highscore! time:" + highscore;
+      document.getElementById("h_s").innerHTML = "YOUR HIGHSCORE:" + highscore;
+    } else {
       document.getElementById("p_s").innerHTML =
-        "you finished! new highscore, time:" + totalSeconds;
+        "you finished! time:" + totalSeconds;
     }
   }
 };
