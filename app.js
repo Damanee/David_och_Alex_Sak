@@ -8,7 +8,7 @@ function startGame() {
   document.getElementById("p_s").innerHTML = "press space to start!";
   document.getElementById("c_l").style.display = "none";
   document.getElementById("y_f").style.display = "none";
-  distance = 610;
+  distance = 75;
   isPlaying = false;
   clearInterval(clockInterval);
   myGameArea.start();
